@@ -1,4 +1,8 @@
 package entities;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AccountTransaction {
 
 	String date;
@@ -23,6 +27,22 @@ public class AccountTransaction {
 		
 		this.amount = amount;
 		
+	}
+	
+	public void deposit(double amount) {
+		Date d = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		this.date = f.format(d);
+		this.type = "lodgement";
+		this.amount = amount;
+	}
+	
+	public void withdraw(double amount){
+		Date d = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		this.date = f.format(d);
+		this.type = "withdraw";
+		this.amount = amount;
 	}
 	
 	//Accessor methods
