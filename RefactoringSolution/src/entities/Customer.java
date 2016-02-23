@@ -33,7 +33,7 @@ public class Customer {
 		this.firstName = firstName;
 		this.DOB = DOB;
 		this.customerID = customerID;
-		this.password = password;;
+		this.password = password;
 		this.accounts = accounts;
 	}
 	
