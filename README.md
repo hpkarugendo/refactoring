@@ -5,8 +5,8 @@ Paddy's Assignment
 
 1. Created packages
 ------------------------
-  - for organisation as I would be adding a few more classes and might 
-  - might also decide to keep the old classes for better comparison in case I misse something
+  - for organisation as I would be adding a few more classes and
+  - might also decide to keep the old classes for better comparison in case I missed something
   - it is also considered convention to use packages
 
 
@@ -14,7 +14,7 @@ Paddy's Assignment
 ------------------------
   a. Validator
     - this is used to validate entries as numbers 
-    - and to also convert doubles to currency using NumberFormat
+    - and to convert doubles to currency using NumberFormat
     
   b. Generators
     - this generates passwords using names
@@ -22,7 +22,7 @@ Paddy's Assignment
     - might also use it to make 4 digit pins 
     
   c. AlertBuilder
-    - Used to create AlertDialos
+    - Used to create AlertDialogs
     - Intended to use it for all types of dialogs but again, more complexity would have been introduced
     - we want to make things better not worse after all
     - No inpit dialogs therefore, only message dialogs
