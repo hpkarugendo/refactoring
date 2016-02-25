@@ -3,6 +3,7 @@ package logic;
 import javax.swing.JOptionPane;
 
 public class AlertBuilder {
+	
 	public AlertBuilder() {
 	}
 	

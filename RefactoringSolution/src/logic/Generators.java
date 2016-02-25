@@ -7,15 +7,12 @@ import java.util.Random;
 public class Generators {
 	private List<String> passwords, pins;
 	private List<Integer> ids;
-	private String fName, lName;
 
-	public Generators(String first, String last) {
+	public Generators() {
 		super();
 		this.passwords = new ArrayList<String>();
 		this.pins = new ArrayList<String>();
 		this.ids = new ArrayList<Integer>();
-		this.fName = first;
-		this.lName = last;
 		generateValues();
 	}
 	
@@ -23,8 +20,10 @@ public class Generators {
 		return pins.remove(0);
 	}
 	
-	public String getPassword(){
-		return passwords.remove(0);
+	public String getPassword(String first, String last){
+		String vString = passwords.remove(0);
+		String value = (last.charAt(0) + vString + first.charAt(0)).toUpperCase();
+		return value;
 	}
 	
 	public int getId(){
@@ -46,7 +45,7 @@ public class Generators {
 			Random rn = new Random();
 			int range = 999999 - 100000 + 1;
 			int randomNum =  rn.nextInt(range) + 100000;
-			String value = (this.lName.charAt(0) +  String.valueOf(randomNum) + this.fName.charAt(0)).toUpperCase();
+			String value = String.valueOf(randomNum);
 			if(!passwords.contains(value)){
 				passwords.add(value);
 			}
