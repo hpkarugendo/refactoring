@@ -1,6 +1,7 @@
 package entities;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.List; 
 
 public class Customer {
 
@@ -11,7 +12,7 @@ public class Customer {
 	String customerID = "";
 	String password = "";
 	
-	ArrayList<CustomerAccount> accounts = new ArrayList<CustomerAccount> ();
+	List<CustomerAccount> accounts = new ArrayList<CustomerAccount> ();
 
 	//Blank constructor
 	public Customer()
@@ -26,7 +27,7 @@ public class Customer {
 	}
 	
 	//Constructor with details
-	public Customer(String PPS, String surname, String firstName, String DOB, String customerID, String password, ArrayList<CustomerAccount> accounts)
+	public Customer(String PPS, String surname, String firstName, String DOB, String customerID, String password, List<CustomerAccount> accounts)
 	{
 		this.PPS = PPS;
 		this.surname = surname;
@@ -68,7 +69,7 @@ public class Customer {
 		return this.password;
 	}
 	
-	public ArrayList<CustomerAccount> getAccounts()
+	public List<CustomerAccount> getAccounts()
 	{
 		return this.accounts;
 	}
@@ -107,7 +108,7 @@ public class Customer {
 		this.password = password;
 	}
 	
-	public void setAccounts(ArrayList<CustomerAccount> accounts)
+	public void setAccounts(List<CustomerAccount> accounts)
 	{
 		this.accounts = accounts;
 	}
