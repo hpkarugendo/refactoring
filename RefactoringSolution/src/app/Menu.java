@@ -1,29 +1,16 @@
 package app;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Date;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import java.awt.*;
+
+import java.awt.event.*;
+import java.util.ArrayList;
+
+import javax.swing.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import javax.swing.text.MaskFormatter;
 
 import entities.ATMCard;
 import entities.AccountTransaction;
@@ -31,6 +18,12 @@ import entities.Customer;
 import entities.CustomerAccount;
 import entities.CustomerCurrentAccount;
 import entities.CustomerDepositAccount;
+
+import java.util.ArrayList; 
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Menu extends JFrame{
 	
@@ -1655,9 +1648,8 @@ public class Menu extends JFrame{
 	  }  
 	  catch(NumberFormatException nfe)  
 	  {  
-	    return false;  
-	  }  
-	  return true;  
+		    return false;  
+		  }  
+		  return true;  
+		}
 	}
-}
-

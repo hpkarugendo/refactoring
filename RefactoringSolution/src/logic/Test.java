@@ -20,8 +20,8 @@ public class Test {
 //		System.out.println("Your ID is: " + gn.getId());
 //		System.out.println("Your PIN is: " + gn.getPin());
 //		System.out.println("Your PASWORD is: " + gn.getPassword());
-		ViewCreator creator = new ViewCreator();
-		creator.menuStart();
+		Builder builder = new Builder();
+		builder.mainFrame();
 	}
 
 }
