@@ -8,14 +8,11 @@ public class Validation {
 		super();
 	}
 	
-	public String formatMoney(String amount){
+	public String formatMoney(double amount){
 		String ans = "";
-		if(isMoney(amount)){
-			double d = Double.parseDouble(amount);
+			double d = amount;
 			NumberFormat f = NumberFormat.getCurrencyInstance();
 			ans = f.format(d);
-		}
-		
 		return ans;
 	}
 

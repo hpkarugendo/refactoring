@@ -34,7 +34,7 @@ import logic.AlertBuilder;
 import logic.Generators;
 import logic.Validation;
 
-public class ViewCreator {
+public class ViewCreator implements ActionListener{
 	/*
 	 * All Variables to be used
 	 */
@@ -57,7 +57,7 @@ public class ViewCreator {
 	Generators generators;
 	Validation validate;
 	// properties
-	boolean loop = true, loop2 = true, cont = false, found = false;
+	boolean loop = true, loop2 = true, cont = false, found = false, on = false;
 
 	public ViewCreator() {
 		super();
@@ -120,7 +120,7 @@ public class ViewCreator {
 		content.add(continuePanel);
 
 		//Created custom ActionListener Class at bottom
-		continueButton.addActionListener(new MyActionListener());
+		continueButton.addActionListener(this);
 		f.setVisible(true);
 	}
 
@@ -153,7 +153,6 @@ public class ViewCreator {
 
 		panel2 = new JPanel();
 		add = new JButton("Add");
-
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -179,7 +178,7 @@ public class ViewCreator {
 				f.dispose();
 			}
 		});
-		JButton cancel = new JButton("Cancel");
+		cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				f1.dispose();
@@ -202,7 +201,7 @@ public class ViewCreator {
 	public void exisitingCustomer() {
 		Customer customer = null;
 		while (loop) {
-			Object customerID = JOptionPane.showInputDialog(f, "Enter Customer ID:");
+			Object customerID = builder.input(f, "Enter Customer ID:");
 
 			for (Customer aCustomer : customerList) {
 
@@ -215,11 +214,10 @@ public class ViewCreator {
 			}
 
 			if (found == false) {
-				int reply = JOptionPane.showConfirmDialog(null, null, "User not found. Try again?",
-						JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
+				int reply = builder.confirm("User not found. Try again?");
+				if (reply == 1) {
 					loop = true;
-				} else if (reply == JOptionPane.NO_OPTION) {
+				} else if (reply == 2) {
 					f.dispose();
 					loop = false;
 					loop2 = false;
@@ -232,16 +230,15 @@ public class ViewCreator {
 		}
 
 		while (loop2) {
-			Object customerPassword = JOptionPane.showInputDialog(f, "Enter Customer Password;");
+			Object customerPassword = builder.input(f, "Enter Customer Password;");
 
 			if (!customer.getPassword().equals(customerPassword))
 				// check if custoemr password is correct
 			{
-				int reply = JOptionPane.showConfirmDialog(null, null, "Incorrect password. Try again?",
-						JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
+				int reply = builder.confirm("Incorrect password. Try again?");
+				if (reply == 1) {
 
-				} else if (reply == JOptionPane.NO_OPTION) {
+				} else if (reply == 2) {
 					f.dispose();
 					loop2 = false;
 					menuStart();
@@ -263,17 +260,18 @@ public class ViewCreator {
 	 * For Administrators
 	 */
 	public void admin() {
+		loop = true; loop2 = true; cont = false;
 		while(loop)
 	    {
-	    Object adminUsername = JOptionPane.showInputDialog(f, "Enter Administrator Username:");
+	    Object adminUsername = builder.input(f, "Enter Administrator Username:");
 
 	    if(!adminUsername.equals("admin"))//search admin list for admin with matching admin username
 	    {
-	    	int reply  = JOptionPane.showConfirmDialog(null, null, "Incorrect Username. Try again?", JOptionPane.YES_NO_OPTION);
-	    	if (reply == JOptionPane.YES_OPTION) {
+	    	int reply  = builder.confirm("Incorrect Username. Try again?");
+	    	if (reply == 1) {
 	    		loop = true;
 	    	}
-	    	else if(reply == JOptionPane.NO_OPTION)
+	    	else if(reply == 2)
 	    	{
 	    		f1.dispose();
 	    		loop = false;
@@ -289,15 +287,15 @@ public class ViewCreator {
 	    
 	    while(loop2)
 	    {
-	    	Object adminPassword = JOptionPane.showInputDialog(f, "Enter Administrator Password;");
+	    	Object adminPassword = builder.input(f, "Enter Administrator Password;");
 	    	
 	    	   if(!adminPassword.equals("admin11"))//search admin list for admin with matching admin password
 			    {
-			    	int reply  = JOptionPane.showConfirmDialog(null, null, "Incorrect Password. Try again?", JOptionPane.YES_NO_OPTION);
-			    	if (reply == JOptionPane.YES_OPTION) {
+			    	int reply  = builder.confirm("Incorrect Password. Try again?");
+			    	if (reply == 1) {
 			    		
 			    	}
-			    	else if(reply == JOptionPane.NO_OPTION){
+			    	else if(reply == 2){
 			    		f1.dispose();
 			    		loop2 = false;
 			    		menuStart();
@@ -375,14 +373,7 @@ public class ViewCreator {
 
 					f.dispose();
 
-					f = new JFrame("Customer Menu");
-					f.setSize(400, 300);
-					f.setLocation(200, 200);
-					f.addWindowListener(new WindowAdapter() {
-						public void windowClosing(WindowEvent we) {
-							System.exit(0);
-						}
-					});
+					f = createFrame("Customer Menu");
 					f.setVisible(true);
 
 					JPanel statementPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -466,180 +457,14 @@ public class ViewCreator {
 
 					lodgementButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ae) {
-							boolean loop = true;
-							boolean on = true;
-							double balance = 0;
-
-							if (acc instanceof CustomerCurrentAccount) {
-								int count = 3;
-								int checkPin = ((CustomerCurrentAccount) acc).getAtm().getPin();
-								loop = true;
-
-								while (loop) {
-									if (count == 0) {
-										//Replaced another dialog here
-										notice = "Pin entered incorrectly 3 times\nATM card locked.";
-										builder.toast(notice);
-										((CustomerCurrentAccount) acc).getAtm().setValid(false);
-										customer(e);
-										loop = false;
-										on = false;
-									}
-
-									String Pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
-									int i = Integer.parseInt(Pin);
-
-									if (on) {
-										if (checkPin == i) {
-											loop = false;
-											//Replaced another dialog here
-											notice = "Pin entry successful";
-											builder.toast(notice);
-
-										} else {
-											count--;
-											//Replaced another dialog here
-											notice = "Incorrect pin. " + count + " attempts remaining.";
-											builder.toast(notice);
-										}
-
-									}
-								}
-
-							}
-							if (on == true) {
-								String balanceTest = JOptionPane.showInputDialog(f, "Enter amount you wish to lodge:");
-								/*
-								 * Replaced the isNumeric method with a better one which tests to see if the string entered was numeric (with decimals).
-								 */
-								if (validate.isMoney(balanceTest)) {
-
-									balance = Double.parseDouble(balanceTest);
-									loop = false;
-
-								} else {
-									notice = "You must enter a numerical value!";
-									builder.toast(notice);
-								}
-
-								String euro = "\u20ac";
-								acc.setBalance(acc.getBalance() + balance);
-								// String date = new
-								// SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-								Date date = new Date();
-								String date2 = date.toString();
-								String type = "Lodgement";
-								double amount = balance;
-
-								AccountTransaction transaction = new AccountTransaction(date2, type, amount);
-								acc.getTransactionList().add(transaction);
-
-								JOptionPane.showMessageDialog(f, balance + euro + " added do you account!", "Lodgement",
-										JOptionPane.INFORMATION_MESSAGE);
-								JOptionPane.showMessageDialog(f, "New balance = " + acc.getBalance() + euro,
-										"Lodgement", JOptionPane.INFORMATION_MESSAGE);
-							}
+							lodgeMoney();
 
 						}
 					});
 
 					withdrawButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ae) {
-							boolean loop = true;
-							boolean on = true;
-							double withdraw = 0;
-
-							if (acc instanceof CustomerCurrentAccount) {
-								int count = 3;
-								int checkPin = ((CustomerCurrentAccount) acc).getAtm().getPin();
-								loop = true;
-
-								while (loop) {
-									if (count == 0) {
-										JOptionPane.showMessageDialog(f,
-												"Pin entered incorrectly 3 times. ATM card locked.", "Pin",
-												JOptionPane.INFORMATION_MESSAGE);
-										((CustomerCurrentAccount) acc).getAtm().setValid(false);
-										customer(e);
-										loop = false;
-										on = false;
-									}
-
-									String Pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
-									int i = Integer.parseInt(Pin);
-
-									if (on) {
-										if (checkPin == i) {
-											loop = false;
-											JOptionPane.showMessageDialog(f, "Pin entry successful", "Pin",
-													JOptionPane.INFORMATION_MESSAGE);
-
-										} else {
-											count--;
-											JOptionPane.showMessageDialog(f,
-													"Incorrect pin. " + count + " attempts remaining.", "Pin",
-													JOptionPane.INFORMATION_MESSAGE);
-
-										}
-
-									}
-								}
-
-							}
-							if (on == true) {
-								String balanceTest = JOptionPane.showInputDialog(f,
-										"Enter amount you wish to withdraw (max 500):");// the
-																						// isNumeric
-																						// method
-																						// tests
-																						// to
-																						// see
-																						// if
-																						// the
-																						// string
-																						// entered
-																						// was
-																						// numeric.
-								if (validate.isMoney(balanceTest)) {
-
-									withdraw = Double.parseDouble(balanceTest);
-									loop = false;
-
-								} else {
-									JOptionPane.showMessageDialog(f, "You must enter a numerical value!", "Oops!",
-											JOptionPane.INFORMATION_MESSAGE);
-								}
-								if (withdraw > 500) {
-									JOptionPane.showMessageDialog(f, "500 is the maximum you can withdraw at a time.",
-											"Oops!", JOptionPane.INFORMATION_MESSAGE);
-									withdraw = 0;
-								}
-								if (withdraw > acc.getBalance()) {
-									JOptionPane.showMessageDialog(f, "Insufficient funds.", "Oops!",
-											JOptionPane.INFORMATION_MESSAGE);
-									withdraw = 0;
-								}
-
-								String euro = "\u20ac";
-								acc.setBalance(acc.getBalance() - withdraw);
-								// recording transaction:
-								// String date = new
-								// SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-								Date date = new Date();
-								String date2 = date.toString();
-
-								String type = "Withdraw";
-								double amount = withdraw;
-
-								AccountTransaction transaction = new AccountTransaction(date2, type, amount);
-								acc.getTransactionList().add(transaction);
-
-								JOptionPane.showMessageDialog(f, withdraw + euro + " withdrawn.", "Withdraw",
-										JOptionPane.INFORMATION_MESSAGE);
-								JOptionPane.showMessageDialog(f, "New balance = " + acc.getBalance() + euro, "Withdraw",
-										JOptionPane.INFORMATION_MESSAGE);
-							}
-
+							withdrawMoney();
 						}
 					});
 
@@ -651,6 +476,172 @@ public class ViewCreator {
 					});
 				}
 			});
+		}
+	}
+	
+	/*
+	 * Transactions for Customer - Lodgement
+	 */
+	public void lodgeMoney(){
+		loop = true;
+		on = true;
+		double balance = 0;
+
+		if (acc instanceof CustomerCurrentAccount) {
+			int count = 3;
+			int checkPin = ((CustomerCurrentAccount) acc).getAtm().getPin();
+			loop = true;
+
+			while (loop) {
+				if (count == 0) {
+					//Replaced another dialog here
+					notice = "Pin entered incorrectly 3 times\nATM card locked.";
+					builder.toast(notice);
+					((CustomerCurrentAccount) acc).getAtm().setValid(false);
+					customer(e);
+					loop = false;
+					on = false;
+				}
+
+				String Pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
+				int i = Integer.parseInt(Pin);
+
+				if (on) {
+					if (checkPin == i) {
+						loop = false;
+						//Replaced another dialog here
+						notice = "Pin entry successful";
+						builder.toast(notice);
+
+					} else {
+						count--;
+						//Replaced another dialog here
+						notice = "Incorrect pin. " + count + " attempts remaining.";
+						builder.toast(notice);
+					}
+
+				}
+			}
+
+		}
+		if (on == true) {
+			String balanceTest = JOptionPane.showInputDialog(f, "Enter amount you wish to lodge:");
+			/*
+			 * Replaced the isNumeric method with a better one which tests to see if the string entered was numeric (with decimals).
+			 */
+			if (validate.isMoney(balanceTest)) {
+
+				balance = Double.parseDouble(balanceTest);
+				loop = false;
+
+			} else {
+				notice = "You must enter a numerical value!";
+				builder.toast(notice);
+			}
+
+			acc.setBalance(acc.getBalance() + balance);
+			// String date = new
+			// SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+			Date date = new Date();
+			String date2 = date.toString();
+			String type = "Lodgement";
+			double amount = balance;
+
+			AccountTransaction transaction = new AccountTransaction(date2, type, amount);
+			acc.getTransactionList().add(transaction);
+
+			builder.alert(f, validate.formatMoney(balance) + " added do you account!", "Lodgement");
+			builder.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Lodgement");
+		}
+	}
+	
+	/*
+	 * Transactions for Customer - Withdraw
+	 */
+	public void withdrawMoney(){
+		loop = true;
+		on = true;
+		double withdraw = 0;
+
+		if (acc instanceof CustomerCurrentAccount) {
+			int count = 3;
+			int checkPin = ((CustomerCurrentAccount) acc).getAtm().getPin();
+			loop = true;
+
+			while (loop) {
+				if (count == 0) {
+					JOptionPane.showMessageDialog(f,
+							"Pin entered incorrectly 3 times. ATM card locked.", "Pin",
+							JOptionPane.INFORMATION_MESSAGE);
+					((CustomerCurrentAccount) acc).getAtm().setValid(false);
+					customer(e);
+					loop = false;
+					on = false;
+				}
+
+				String Pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
+				int i = Integer.parseInt(Pin);
+
+				if (on) {
+					if (checkPin == i) {
+						loop = false;
+						JOptionPane.showMessageDialog(f, "Pin entry successful", "Pin",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					} else {
+						count--;
+						JOptionPane.showMessageDialog(f,
+								"Incorrect pin. " + count + " attempts remaining.", "Pin",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					}
+
+				}
+			}
+
+		}
+		if (on == true) {
+			String balanceTest = JOptionPane.showInputDialog(f,
+					"Enter amount you wish to withdraw (max 500):");
+			/*
+			 * the isNumeric method tests to see if the string entered was numeric.
+			 */
+			if (validate.isMoney(balanceTest)) {
+
+				withdraw = Double.parseDouble(balanceTest);
+				loop = false;
+
+			} else {
+				JOptionPane.showMessageDialog(f, "You must enter a numerical value!", "Oops!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			if (withdraw > 500) {
+				JOptionPane.showMessageDialog(f, "500 is the maximum you can withdraw at a time.",
+						"Oops!", JOptionPane.INFORMATION_MESSAGE);
+				withdraw = 0;
+			}
+			if (withdraw > acc.getBalance()) {
+				JOptionPane.showMessageDialog(f, "Insufficient funds.", "Oops!",
+						JOptionPane.INFORMATION_MESSAGE);
+				withdraw = 0;
+			}
+
+			String euro = "\u20ac";
+			acc.setBalance(acc.getBalance() - withdraw);
+			// recording transaction:
+			// String date = new
+			// SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+			Date date = new Date();
+			String date2 = date.toString();
+
+			String type = "Withdraw";
+			double amount = withdraw;
+
+			AccountTransaction transaction = new AccountTransaction(date2, type, amount);
+			acc.getTransactionList().add(transaction);
+
+			builder.alert(f, validate.formatMoney(withdraw)+ " withdrawn.", "Withdraw");
+			builder.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Withdraw");
 		}
 	}
 	
@@ -670,51 +661,44 @@ public class ViewCreator {
 	}
 
 	/*
-	 * Custom ActionListener Class
+	 * General Listener method for Main Menu
+	 * Was planning to use it for other actions but I ran into problems
 	 */
-	class MyActionListener implements ActionListener {
-		boolean loop = true;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			builder = new AlertBuilder();
-			/*
-			 * Actions for the First Welcome JFrame
-			 */
-			String user = userType.getSelection().getActionCommand();
-			String action = e.getActionCommand();
-
-			// if user selects NEW
-			// CUSTOMER--------------------------------------------------------------------------------------
-			if (user.equals("New Customer")) {
-				newCustomer();
-			}
-
-			// if user select
-			// ADMIN----------------------------------------------------------------------------------------------
-			if (user.equals("Administrator")) {
-				builder.toast("Hello Admin");
-			}
-
-			// if user selects CUSTOMER
-			// ----------------------------------------------------------------------------------------
-			if (user.equals("Customer")) {
-				builder.toast("Hello Customer");
-			}
-			
-			//For Adding New Customer 'Add Button'
-			switch (action) {
-			case "Add":
-				
-				break;
-
-			//For Adding New Customer 'Cancel Button'
-			case "Cancel":
-				
-				break;
-			}
-			
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		/*
+		 * Actions for the First Welcome JFrame
+		 */
+		String user = userType.getSelection().getActionCommand();
+		String action = "";
+		if(e.getSource() instanceof JButton){
+			action = e.getActionCommand();
 		}
+		switch(user){
+		// if user selects NEW
+		// CUSTOMER--------------------------------------------------------------------------------------
+		case "New Customer":
+			newCustomer();
+			break;
 
+		// if user select
+		// ADMIN----------------------------------------------------------------------------------------------
+		case "Administrator":
+			admin();
+			break;
+
+		// if user selects CUSTOMER
+		// ----------------------------------------------------------------------------------------
+		case "Customer":
+			exisitingCustomer();
+			break;
+		}
+		
+		switch(action){
+		case "Add Cus":
+			
+			break;
+		}
 	}
 }
