@@ -1,10 +1,10 @@
-package logic;
+package refactored;
 
 import java.text.NumberFormat;
 
-public class Validation {
+public class MyChecks {
 
-	public Validation() {
+	public MyChecks() {
 		super();
 	}
 	

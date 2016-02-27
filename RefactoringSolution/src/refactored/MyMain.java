@@ -1,4 +1,4 @@
-package logic;
+package refactored;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -12,9 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class Builder{
+public class MyMain{
 	
-	public Builder() {
+	public MyMain() {
 	}
 	
 	public void toast(String message){
@@ -44,11 +44,11 @@ public class Builder{
 	}
 	
 	public void mainFrame() {
-		if(StaticO.f == null){
-			StaticO.f = new JFrame("User Type");
-			StaticO.f.setSize(400, 300);
-			StaticO.f.setLocationRelativeTo(null);
-			StaticO.f.addWindowListener(new WindowAdapter() {
+		if(MyStats.f == null){
+			MyStats.f = new JFrame("User Type");
+			MyStats.f.setSize(400, 300);
+			MyStats.f.setLocationRelativeTo(null);
+			MyStats.f.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent we) {
 					System.exit(0);
 				}
@@ -58,28 +58,28 @@ public class Builder{
 		JRadioButton radioButton;
 		userTypePanel.add(radioButton = new JRadioButton("Existing Customer"));
 		radioButton.setActionCommand("Customer");
-		StaticO.userType.add(radioButton);
+		MyStats.userType.add(radioButton);
 
 		userTypePanel.add(radioButton = new JRadioButton("Administrator"));
 		radioButton.setActionCommand("Administrator");
-		StaticO.userType.add(radioButton);
+		MyStats.userType.add(radioButton);
 
 		userTypePanel.add(radioButton = new JRadioButton("New Customer"));
 		radioButton.setActionCommand("New Customer");
-		StaticO.userType.add(radioButton);
+		MyStats.userType.add(radioButton);
 
 		JPanel continuePanel = new JPanel();
 		JButton continueButton = new JButton("Continue");
 		continuePanel.add(continueButton);
 
-		Container content = StaticO.f.getContentPane();
+		Container content = MyStats.f.getContentPane();
 		content.setLayout(new GridLayout(2, 1));
 		content.add(userTypePanel);
 		content.add(continuePanel);
 
 		// Created custom ActionListener Class at bottom
 		continueButton.addActionListener(new MyListener());
-		StaticO.f.setVisible(true);
+		MyStats.f.setVisible(true);
 		}
 	}
 	
@@ -88,34 +88,34 @@ public class Builder{
 	}
 	
 	public void newCustFrame(){		
-		if(StaticO.f1 == null){
-			StaticO.f1 = new JFrame("Create New Customer");
-			StaticO.f1.setSize(400, 300);
-			StaticO.f1.setLocationRelativeTo(null);
-			StaticO.f1.addWindowListener(new WindowAdapter() {
+		if(MyStats.f1 == null){
+			MyStats.f1 = new JFrame("Create New Customer");
+			MyStats.f1.setSize(400, 300);
+			MyStats.f1.setLocationRelativeTo(null);
+			MyStats.f1.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent we) { System.exit(0); }
 			});
-				Container content = StaticO.f1.getContentPane();
+				Container content = MyStats.f1.getContentPane();
 				content.setLayout(new BorderLayout());
 				JPanel panel = new JPanel(new GridLayout(6, 2));
-				panel.add(StaticO.firstNameLabel);
-				panel.add(StaticO.firstNameTextField);
-				panel.add(StaticO.surnameLabel);
-				panel.add(StaticO.surnameTextField);
-				panel.add(StaticO.pPPSLabel);
-				panel.add(StaticO.pPSTextField);
-				panel.add(StaticO.dOBLabel);
-				panel.add(StaticO.dOBTextField);
-				StaticO.add.setActionCommand("Add Cus");
-				StaticO.add.addActionListener(new MyListener());
-				StaticO.cancel.setActionCommand("Cancel Add Cus");
-				StaticO.cancel.addActionListener(new MyListener());
-				StaticO.panel2.add(StaticO.add);
-				StaticO.panel2.add(StaticO.cancel);
+				panel.add(MyStats.firstNameLabel);
+				panel.add(MyStats.firstNameTextField);
+				panel.add(MyStats.surnameLabel);
+				panel.add(MyStats.surnameTextField);
+				panel.add(MyStats.pPPSLabel);
+				panel.add(MyStats.pPSTextField);
+				panel.add(MyStats.dOBLabel);
+				panel.add(MyStats.dOBTextField);
+				MyStats.add.setActionCommand("Add Cus");
+				MyStats.add.addActionListener(new MyListener());
+				MyStats.cancel.setActionCommand("Cancel Add Cus");
+				MyStats.cancel.addActionListener(new MyListener());
+				MyStats.panel2.add(MyStats.add);
+				MyStats.panel2.add(MyStats.cancel);
 				content.add(panel, BorderLayout.CENTER);
-				content.add(StaticO.panel2, BorderLayout.SOUTH);
+				content.add(MyStats.panel2, BorderLayout.SOUTH);
 		}
-			StaticO.f1.setVisible(true);		
+			MyStats.f1.setVisible(true);		
 	}
 	
 	public void oldCustFrame(){

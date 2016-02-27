@@ -1,4 +1,4 @@
-package logic;
+package refactored;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 import entities.Customer;
 
-public abstract class StaticO {
+public abstract class MyStats {
 	public static final List<Customer> customerList = new ArrayList<Customer>();
 	//Frames
 	public static JFrame f = null;

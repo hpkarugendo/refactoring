@@ -1,4 +1,4 @@
-package logic;
+package refactored;
 
 import views.ViewCreator;
 
@@ -20,8 +20,8 @@ public class Test {
 //		System.out.println("Your ID is: " + gn.getId());
 //		System.out.println("Your PIN is: " + gn.getPin());
 //		System.out.println("Your PASWORD is: " + gn.getPassword());
-		Builder builder = new Builder();
-		builder.mainFrame();
+		MyMain myMain = new MyMain();
+		myMain.mainFrame();
 	}
 
 }

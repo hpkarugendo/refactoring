@@ -1,14 +1,14 @@
-package logic;
+package refactored;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Generators {
+public class MyGenerator {
 	private List<String> passwords, pins;
 	private List<Integer> ids;
 
-	public Generators() {
+	public MyGenerator() {
 		super();
 		this.passwords = new ArrayList<String>();
 		this.pins = new ArrayList<String>();
