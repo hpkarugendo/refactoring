@@ -34,7 +34,7 @@ import entities.CustomerCurrentAccount;
 import entities.CustomerDepositAccount;
 import refactored.MyChecks;
 import refactored.MyGenerator;
-import refactored.MyMain;
+import refactored.MyMenu;
 
 public class ViewCreator implements ActionListener {
 	/*
@@ -55,7 +55,7 @@ public class ViewCreator implements ActionListener {
 	Customer e, customer;
 	CustomerAccount acc = new CustomerAccount();
 	String PPS, firstName, surname, DOB, password, CustomerID, notice;
-	MyMain myMain;
+	MyMenu myMenu;
 	MyGenerator myGenerator;
 	MyChecks validate;
 	// properties
@@ -64,7 +64,7 @@ public class ViewCreator implements ActionListener {
 
 	public ViewCreator() {
 		super();
-		myMain = new MyMain();
+		myMenu = new MyMenu();
 		myGenerator = new MyGenerator();
 		validate = new MyChecks();
 	}
@@ -176,7 +176,7 @@ public class ViewCreator implements ActionListener {
 
 				// //Replaced original JOP with this!
 				String mString = "CustomerID = " + customer.getCustomerID() + "\n Password = " + customer.getPassword();
-				myMain.toast(mString);
+				myMenu.toast(mString);
 				resetFields();
 				f.dispose();
 				menuStart();
@@ -206,7 +206,7 @@ public class ViewCreator implements ActionListener {
 	public void exisitingCustomer() {
 		Customer customer = null;
 		while (loop) {
-			Object customerID = myMain.input(f, "Enter Customer ID:");
+			Object customerID = myMenu.input(f, "Enter Customer ID:");
 
 			for (Customer aCustomer : customerList) {
 
@@ -219,7 +219,7 @@ public class ViewCreator implements ActionListener {
 			}
 
 			if (found == false) {
-				int reply = myMain.confirm("User not found. Try again?");
+				int reply = myMenu.confirm("User not found. Try again?");
 				if (reply == 1) {
 					loop = true;
 				} else if (reply == 2) {
@@ -235,12 +235,12 @@ public class ViewCreator implements ActionListener {
 		}
 
 		while (loop2) {
-			Object customerPassword = myMain.input(f, "Enter Customer Password;");
+			Object customerPassword = myMenu.input(f, "Enter Customer Password;");
 
 			if (!customer.getPassword().equals(customerPassword))
 			// check if custoemr password is correct
 			{
-				int reply = myMain.confirm("Incorrect password. Try again?");
+				int reply = myMenu.confirm("Incorrect password. Try again?");
 				if (reply == 1) {
 
 				} else if (reply == 2) {
@@ -269,12 +269,12 @@ public class ViewCreator implements ActionListener {
 		loop2 = true;
 		cont = false;
 		while (loop) {
-			Object adminUsername = myMain.input(f, "Enter Administrator Username:");
+			Object adminUsername = myMenu.input(f, "Enter Administrator Username:");
 
 			if (!adminUsername.equals("admin"))// search admin list for admin
 												// with matching admin username
 			{
-				int reply = myMain.confirm("Incorrect Username. Try again?");
+				int reply = myMenu.confirm("Incorrect Username. Try again?");
 				if (reply == 1) {
 					loop = true;
 				} else if (reply == 2) {
@@ -289,12 +289,12 @@ public class ViewCreator implements ActionListener {
 		}
 
 		while (loop2) {
-			Object adminPassword = myMain.input(f, "Enter Administrator Password;");
+			Object adminPassword = myMenu.input(f, "Enter Administrator Password;");
 
 			if (!adminPassword.equals("admin11"))
 				// search admin list for admin with matching admin password
 			{
-				int reply = myMain.confirm("Incorrect Password. Try again?");
+				int reply = myMenu.confirm("Incorrect Password. Try again?");
 				if (reply == 1) {
 
 				} else if (reply == 2) {
@@ -326,7 +326,7 @@ public class ViewCreator implements ActionListener {
 		if (e.getAccounts().size() == 0) {
 			// Replaced the AlertDialog here with a custom one
 			notice = "This customer does not have any accounts yet. \n An admin must create an account for this customer \n for them to be able to use customer functionality\nOops!";
-			myMain.toast(notice);
+			myMenu.toast(notice);
 			f.dispose();
 			menuStart();
 		} else {
@@ -495,7 +495,7 @@ public class ViewCreator implements ActionListener {
 				if (count == 0) {
 					// Replaced another dialog here
 					notice = "Pin entered incorrectly 3 times\nATM card locked.";
-					myMain.toast(notice);
+					myMenu.toast(notice);
 					((CustomerCurrentAccount) acc).getAtm().setValid(false);
 					customer(e);
 					loop = false;
@@ -510,13 +510,13 @@ public class ViewCreator implements ActionListener {
 						loop = false;
 						// Replaced another dialog here
 						notice = "Pin entry successful";
-						myMain.toast(notice);
+						myMenu.toast(notice);
 
 					} else {
 						count--;
 						// Replaced another dialog here
 						notice = "Incorrect pin. " + count + " attempts remaining.";
-						myMain.toast(notice);
+						myMenu.toast(notice);
 					}
 
 				}
@@ -536,7 +536,7 @@ public class ViewCreator implements ActionListener {
 
 			} else {
 				notice = "You must enter a numerical value!";
-				myMain.toast(notice);
+				myMenu.toast(notice);
 			}
 
 			acc.setBalance(acc.getBalance() + balance);
@@ -550,8 +550,8 @@ public class ViewCreator implements ActionListener {
 			AccountTransaction transaction = new AccountTransaction(date2, type, amount);
 			acc.getTransactionList().add(transaction);
 
-			myMain.alert(f, validate.formatMoney(balance) + " added do you account!", "Lodgement");
-			myMain.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Lodgement");
+			myMenu.alert(f, validate.formatMoney(balance) + " added do you account!", "Lodgement");
+			myMenu.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Lodgement");
 		}
 	}
 
@@ -637,8 +637,8 @@ public class ViewCreator implements ActionListener {
 			AccountTransaction transaction = new AccountTransaction(date2, type, amount);
 			acc.getTransactionList().add(transaction);
 
-			myMain.alert(f, validate.formatMoney(withdraw) + " withdrawn.", "Withdraw");
-			myMain.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Withdraw");
+			myMenu.alert(f, validate.formatMoney(withdraw) + " withdrawn.", "Withdraw");
+			myMenu.alert(f, "New balance = " + validate.formatMoney(acc.getBalance()), "Withdraw");
 		}
 	}
 
@@ -1389,7 +1389,7 @@ public class ViewCreator implements ActionListener {
 			    
 			    if(found == false)
 			    {
-			    	int reply  = myMain.confirm("User not found. Try again?");
+			    	int reply  = myMenu.confirm("User not found. Try again?");
 			    	if (reply == 1) {
 			    		loop = true;
 			    	}

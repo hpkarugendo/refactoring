@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public class MyListener implements ActionListener{
-	MyMain myMain = new MyMain();
+	MyMenu myMenu = new MyMenu();
 	MyCustomerActions cActions = new MyCustomerActions();
 
 	@Override
@@ -23,19 +23,19 @@ public class MyListener implements ActionListener{
 		// if user selects NEW
 		// CUSTOMER--------------------------------------------------------------------------------------
 		case "New Customer":
-			myMain.newCustFrame();
+			myMenu.newCustFrame();
 			break;
 
 		// if user select
 		// ADMIN----------------------------------------------------------------------------------------------
 		case "Administrator":
-			myMain.toast("Hello Admin");
+			myMenu.adminFrame();
 			break;
 
 		// if user selects CUSTOMER
 		// ----------------------------------------------------------------------------------------
 		case "Customer":
-			myMain.toast("Hello Customer");
+			myMenu.oldCustFrame();
 			break;
 		}
 		
@@ -45,7 +45,7 @@ public class MyListener implements ActionListener{
 			break;
 		case "Cancel Add Cus":
 			MyStats.f1 = null;
-			myMain.mainFrame();
+			myMenu.mainFrame();
 			break;
 		}
 	}

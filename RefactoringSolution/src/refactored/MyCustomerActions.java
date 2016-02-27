@@ -8,7 +8,7 @@ import entities.CustomerAccount;
 
 public class MyCustomerActions {
 	MyGenerator g = new MyGenerator();
-	MyMain b = new MyMain();
+	MyMenu b = new MyMenu();
 	
 	public void addNewCustomer(){
 		MyStats.PPS = MyStats.pPSTextField.getText();

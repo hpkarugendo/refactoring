@@ -63,4 +63,12 @@ public abstract class MyStats {
 	public static String CustomerID = "";
 	public static String password = "";
 	public static String id = "";
+	public static String adminUsername = "admin";
+	public static String adminPassword = "pass";
+	
+	//Booleans
+	public static boolean loop = true;
+	public static boolean loop2 = true;
+	public static boolean found = false;
+	public static boolean cont = false;
 }
