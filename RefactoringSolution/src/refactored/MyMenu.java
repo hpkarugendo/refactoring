@@ -173,27 +173,31 @@ public class MyMenu {
 		while (MyStats.loop) {
 			Object customerID = input(MyStats.f, "Enter Customer ID:");
 
-			for (Customer aCustomer : MyStats.customerList) {
+			if(customerID.toString().isEmpty()){
+				mainFrame();
+			}else {
+				for (Customer aCustomer : MyStats.customerList) {
 
-				if (aCustomer.getCustomerID().equals(customerID))
-				// search customer list for matching customer ID
-				{
-					MyStats.found = true;
-					MyStats.customer = aCustomer;
+					if (aCustomer.getCustomerID().equals(customerID))
+					// search customer list for matching customer ID
+					{
+						MyStats.found = true;
+						MyStats.customer = aCustomer;
+					}
 				}
-			}
 
-			if (MyStats.found == false) {
-				int reply = confirm("User not found. Try again?");
-				if (reply == 1) {
-					MyStats.loop = true;
-				} else if (reply == 2) {
+				if (MyStats.found == false) {
+					int reply = confirm("User not found. Try again?");
+					if (reply == 1) {
+						MyStats.loop = true;
+					} else if (reply == 2) {
+						MyStats.loop = false;
+						MyStats.loop2 = false;
+						mainFrame();
+					}
+				} else {
 					MyStats.loop = false;
-					MyStats.loop2 = false;
-					mainFrame();
 				}
-			} else {
-				MyStats.loop = false;
 			}
 
 		}
@@ -222,5 +226,10 @@ public class MyMenu {
 			MyCustomerActions custTrans = new MyCustomerActions();
 			custTrans.transactions();
 		}
+	}
+	
+	public static void main(String[] args){
+		MyMenu m = new MyMenu();
+		m.mainFrame();
 	}
 }

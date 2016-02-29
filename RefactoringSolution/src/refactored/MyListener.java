@@ -44,7 +44,7 @@ public class MyListener implements ActionListener{
 			cActions.addNewCustomer();
 			break;
 		case "Cancel Add Cus":
-			MyStats.f1 = null;
+			MyStats.f1.setVisible(false);
 			myMenu.mainFrame();
 			break;
 		}

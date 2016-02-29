@@ -95,7 +95,7 @@ public class MyCustomerActions {
 
 			MyStats.exitButtonC.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {
-					MyStats.fCustomer = null;
+					MyStats.fCustomer.setVisible(false);
 					b.mainFrame();
 				}
 			});
@@ -166,7 +166,7 @@ public class MyCustomerActions {
 
 					MyStats.exitButtonC.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ae) {
-							MyStats.fCustomer = null;
+							MyStats.fCustomer.setVisible(false);
 							b.mainFrame();
 						}
 					});
