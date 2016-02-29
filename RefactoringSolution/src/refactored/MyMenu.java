@@ -125,8 +125,8 @@ public class MyMenu {
 
 		if (MyStats.cont) {
 			MyStats.loop = false;
-			// adminstrator();
-			toast("Welcome Admin");
+			MyAdminActions maa = new MyAdminActions();
+			maa.transactions();
 		}
 	}
 
@@ -164,7 +164,7 @@ public class MyMenu {
 	}
 
 	public void oldCustFrame() {
-		Customer customer = null;
+		MyStats.customer = null;
 		MyStats.loop = true;
 		MyStats.loop2 = true;
 		MyStats.found = false;
@@ -179,7 +179,7 @@ public class MyMenu {
 				// search customer list for matching customer ID
 				{
 					MyStats.found = true;
-					customer = aCustomer;
+					MyStats.customer = aCustomer;
 				}
 			}
 
@@ -201,7 +201,7 @@ public class MyMenu {
 		while (MyStats.loop2) {
 			Object customerPassword = input(MyStats.f, "Enter Customer Password;");
 
-			if (!customer.getPassword().equals(customerPassword))
+			if (!MyStats.customer.getPassword().equals(customerPassword))
 			// check if custoemr password is correct
 			{
 				int reply = confirm("Incorrect password. Try again?");
@@ -219,8 +219,8 @@ public class MyMenu {
 
 		if (MyStats.cont) {
 			MyStats.loop = false;
-			// customer(customer);
-			toast("Welcome Customer");
+			MyCustomerActions custTrans = new MyCustomerActions();
+			custTrans.transactions();
 		}
 	}
 }

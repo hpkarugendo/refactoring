@@ -7,6 +7,7 @@ public class CustomerAccount  {
 	String number;
 	double balance;
 	ArrayList<AccountTransaction> transactionList = new ArrayList<AccountTransaction>();
+	ATMCard atm;
 
 	//Blank Constructor
 	public CustomerAccount()
@@ -14,6 +15,7 @@ public class CustomerAccount  {
 		this.number = "";
 		this.balance = 0;
 		this.transactionList = null;
+		this.atm = null;
 	}
 	
 	//Constructor with Details
@@ -26,6 +28,7 @@ public class CustomerAccount  {
 	
 	//Accessor methods
 	
+	
 	public String getNumber()
 	{
 		return this.number;
@@ -34,6 +37,14 @@ public class CustomerAccount  {
 	
 
 	
+	public ATMCard getAtm() {
+		return atm;
+	}
+
+	public void setAtm(ATMCard atm) {
+		this.atm = atm;
+	}
+
 	public double getBalance()
 	{
 		return this.balance;
